@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  courses-api-service:
+  scholarship-service:
     build: .
     ports:
       - 8080:5000
@@ -18,10 +18,12 @@ services:
     restart: on-failure
     networks:
       - my-network
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=scholarship_db
 
 networks:
   my-network:
