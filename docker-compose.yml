@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  courses-api-service:
+    build: .
+    ports:
+      - 8080:5000
+    restart: on-failure
+    networks:
+      - my-network
+    depends_on:
+      - mariadb-service
+  
+  postgresql-db-service:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    restart: on-failure
+    networks:
+      - my-network
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+networks:
+  my-network:
+    driver: bridge
