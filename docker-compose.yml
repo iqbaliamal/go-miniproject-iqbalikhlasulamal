@@ -1,14 +1,12 @@
-version: '3.7'
-
+version: '3'
 services:
-  scholarship-service:
-    build: .
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scholarship
+    restart: unless-stopped
     ports:
-      - 8080:5000
-    restart: on-failure
-    networks:
-      - my-network
-
-networks:
-  my-network:
-    driver: bridge
+      - "80:3000"
+    environment:
+      - PORT=3000

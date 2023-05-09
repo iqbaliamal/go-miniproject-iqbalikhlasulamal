@@ -1,12 +1,30 @@
-FROM golang:alpine
+# Base image
+FROM golang:1.19-alpine
 
+# Set working directory
 WORKDIR /app
 
+# Copy go.mod and go.sum
+COPY go.mod .
+COPY go.sum .
+
+# Download module dependencies
+RUN go mod download
+
+# Copy source code
 COPY . .
 
-RUN go mod download
-RUN go build -o dist
+# Build the app
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /scholarship .
 
-EXPOSE 5000
+# Create minimal image
+FROM scratch
 
-ENTRYPOINT [ "./dist" ]
+# Copy the built binary into the image
+COPY --from=0 /scholarship /scholarship
+
+# Expose port 3000
+EXPOSE 3000
+
+# Run the app
+CMD ["/scholarship"]
