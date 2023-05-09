@@ -67,9 +67,7 @@ func ScholarshipCreate(c *fiber.Ctx) error {
 	filename := c.Locals("filename")
 	log.Println("filename = ", filename)
 	if filename == nil {
-		return c.Status(422).JSON(fiber.Map{
-			"message": "image cover is required.",
-		})
+		filenameString = ""
 	} else {
 		filenameString = fmt.Sprintf("%v", filename)
 	}
