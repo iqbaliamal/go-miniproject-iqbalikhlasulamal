@@ -9,7 +9,7 @@ services:
     networks:
       - my-network
     depends_on:
-      - mariadb-service
+      - postgresql-db-service
   
   postgresql-db-service:
     image: postgres:latest
